@@ -1,3 +1,5 @@
+% Golf game - Created by Ariel Ashkenazy
+% Last modified - 6/28/2020
 function varargout = golf(varargin)
     % GOLF MATLAB code for golf.fig
     %      GOLF, by itself, creates a new GOLF or raises the existing
@@ -125,7 +127,7 @@ function StartBtn_Callback(hObject, eventdata, handles)
     handles.holepos=[,];
     buildGame(hObject,handles);
     handles=guidata(hObject);
-    set(handles.GameSurface,'DrawMode','fast');
+    set(handles.GameSurface,'SortMethod','childorder');
     start(handles.timer);
     set(handles.GameSurface,'ButtonDownFcn',@hit);
     set(handles.figure1,'WindowButtonMotionFcn',@speed);
@@ -198,7 +200,7 @@ function speed(src,evnt) %controls speed arrow
     end
     set(handles.speedText,'Visible','on');
     tetadeg=180/pi*handles.teta;
-    tetatext=num2str(chop(tetadeg,5));
+    tetatext=num2str(round(tetadeg,5,'significant'));
     handles.velocity=sqrt(x^2+y^2);
     if(handles.velocity>handles.maxVelocity) %maxVelocity cannot be exceeded
        handles.velocity=handles.maxVelocity;
@@ -208,7 +210,7 @@ function speed(src,evnt) %controls speed arrow
         set(handles.speedText,'ForegroundColor','k');
         set(handles.speedTextLine,'Color','k');
     end
-    vtext=num2str(chop(handles.velocity,5));
+    vtext=num2str(round(handles.velocity,5,'significant'));
     set(handles.speedTextLine,'position',[xn,yn]+...
         0.005*[(handles.xmax-handles.xmin)*sign(x),(handles.ymax-handles.ymin)*sign(y)]);
     set(handles.speedTextLine,'String',vtext,'Rotation',...
